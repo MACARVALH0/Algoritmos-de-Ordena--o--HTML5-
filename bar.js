@@ -6,7 +6,7 @@ class Bar
         this.pivot = false;
 
         this.width = graphicWidth;
-        this.index = 0;
+        // this.index = 0;
 
         this.x = i*this.width;
         this.y = canvasHeight - this.value;
@@ -17,20 +17,16 @@ class Bar
     }
 
 
-    updatePos(index)
-    {
-        // console.log(`Updating ${this.value}, from ${this.index} to ${index}\n`);
-        this.index = index;
-        this.x = this.index*this.width;
-    }
+    highlight(on, color){ this.color = on ? color || "rgb(30, 30, 30)" : this.originalColor; }
 
 
-    highlight(on, color){ this.color = on ? color : this.originalColor; }
-
-
-    draw()
+    draw(index)
     {
         this.ctx.fillStyle = this.color;
-        this.ctx.fillRect(this.x, this.y, this.width, this.value);
+        this.ctx.fillRect(index*this.width, this.y, this.width, this.value);
+
+        // this.ctx.fillStyle = "rgb(30, 30, 30)";
+        // this.ctx.font = "10px Consolas";
+        // this.ctx.fillText(this.value, index*(this.width+1), this.y+10);
     }
 }

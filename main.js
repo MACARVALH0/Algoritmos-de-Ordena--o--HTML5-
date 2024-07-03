@@ -1,26 +1,25 @@
-async function main(canvas_wrapper, animation)
+async function main(canvas)
 {
-    if(animation.loop)
+    if(canvas.render)
     {
-        console.log("O algoritmo já está em execução")
+        console.log("O algoritmo já está em execução");
+        return null;
     }
 
-    const canvas_element = canvas_wrapper.querySelector("canvas");
+    const canvas_element = canvas.wrapper.querySelector("canvas");
     const canvas_obj =
     {
-        algorithm_name: canvas_wrapper.dataset.algorithm,
+        algorithm: canvas.algorithm,
         width: canvas_element.width,
         height: canvas_element.height < 255 ? canvas_element.height : 255,
         ctx: canvas_element.getContext("2d"),
-        opInterval: 5
+        opInterval: 10
     }
 
     const graph = new Graph(canvas_obj);
-    graph.populateBars(350);
-    // console.log(Array.from(graph.bars).map(x => x.value));
+    graph.populateBars(700);
 
-    graph.beginAnimation(renderGraph, animation);
-
+    graph.beginAnimation(renderGraph, canvas);
     await graph.runAlgorithm();
     await graph.repaint();
     graph.endAnimation();

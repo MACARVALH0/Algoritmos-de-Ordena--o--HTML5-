@@ -1,9 +1,14 @@
 window.addEventListener("load", () =>
 {
-    const canvas_list = document.querySelectorAll(".canvas-wrapper");
-    const render = {loop: undefined};
+    const algorithms = new Map();
+    algorithms.set("insertionsort", insertionsort);
+    // algorithms.set("mergesort", mergesort);
+    algorithms.set("quicksort", quicksort);
+    // algorithms.set("bogosort", bogosort);
 
-    for(let item of canvas_list)
-        item.querySelector("input").addEventListener("click", () =>
-            main(item, render));
+    const canvas = Array.from(document.querySelectorAll(".canvas-wrapper")).map( canvas =>
+    { return {wrapper: canvas, algorithm: algorithms.get(canvas.dataset.algorithm), render: undefined} }); // Cada canvas possui seu objeto de contexto
+
+    for(let item of canvas)
+        item.wrapper.querySelector("input").addEventListener("click", () => main(item));
 });

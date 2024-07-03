@@ -12,12 +12,12 @@ async function quicksort(graph, array, left, right)
     }
 }
 
+
 /// Particionamento de Lomuto
 async function partition(graph, array, left, right)
 {
     let pivot_value = array[left].value;
     graph.highlightBar(left);
-    // array[left].color = "rgb(30, 30, 30)";
     // console.log("\tO pivô é", pivot_value);
 
     let i = left;
@@ -31,12 +31,17 @@ async function partition(graph, array, left, right)
 
             if(i === j) continue;
 
-            await graph.swap(i, j);
+            graph.swap(i, j);
+            await graph.sleep();
         }
+        
+        graph.comparisonCount++;
+
     }
 
     // console.log("left: " + left + " i: " + i);
     await graph.swap(left, i);
+    await graph.sleep();
 
 
     return i;

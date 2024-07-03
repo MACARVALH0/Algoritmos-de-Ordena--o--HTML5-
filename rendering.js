@@ -1,9 +1,8 @@
-function renderGraph(graph_obj, render)
+function renderGraph(graph_obj, canvas)
 {
     const graph = graph_obj;
     const timer = graph_obj.animationInterval;
 
-    //teste
     const draw = graph_obj.render.bind(graph);
 
     var initial_time = null, elapsed_time;
@@ -22,17 +21,17 @@ function renderGraph(graph_obj, render)
             elapsed_time = 0;
         }
 
+
         if(graph_obj.animationFinished)
         {
             console.log("Fim da animação.\n");
-            cancelAnimationFrame(render.loop);
-            render.loop = undefined;
+            canvas.render = undefined;
             draw();
             return;
         }
 
-        render.loop = requestAnimationFrame(step);
+        canvas.render = requestAnimationFrame(step);
     }
 
-    render.loop = requestAnimationFrame(step);
+    canvas.render = requestAnimationFrame(step);
 }

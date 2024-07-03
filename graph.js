@@ -2,7 +2,7 @@ class Graph
 {
     constructor(canvas)
     {
-        this.algorithm = canvas.algorithm_name;
+        this.algorithm = canvas.algorithm;
         this.w = canvas.width;
         this.h = canvas.height;
         this.ctx = canvas.ctx;
@@ -15,6 +15,7 @@ class Graph
         this.highlightColor = "rgb(30, 30, 30)";
 
         this.currentGroup = {x: 0, width: 0};
+        this.comparisonCount = 0;
 
         this.animationFinished = true;
         this.animationLoop = undefined;
@@ -27,12 +28,12 @@ class Graph
         if(this.bars.length > 0) this.bars.splice(0, this.bars.length);
 
         const expected_amount = Math.abs(amount);
-        const min_bar_width = 2;
+        const min_bar_width = .2;
         const final_bar_width = this.w/expected_amount > min_bar_width ? this.w/expected_amount : min_bar_width; // bar graphic width value
         const final_amount = final_bar_width * expected_amount <= this.w ? expected_amount : Math.floor(this.w/final_bar_width); // Actual amount of bars
         this.bar_width = final_bar_width;
 
-        if(final_amount != amount) console.log("A quantidade inserida ultrapassa os limites estabelecidos. A quantidade corrigida é de " + final_amount + " barras.");
+        if(final_amount != amount) console.warn("A população sugerida ultrapassa os limites estabelecidos. A quantidade corrigida é de " + final_amount + " barras.");
 
         const colors = new Uint8ClampedArray(3);
         colors[0] = 0;
@@ -55,22 +56,13 @@ class Graph
 
         this.bars.push(...bars);
         this.bars_len = this.bars.length;
+        // console.log(Array.from(this.bars).map(x => x.value));
     }
 
 
-    async runAlgorithm()
-    {
-        const algo_functions =
-        {
-            "quicksort": quicksort,
-            "mergesort": undefined,
-            "bubblesort": undefined,
-            "bogosort": undefined
-        };
-    
-        const current_algorithm = algo_functions[this.algorithm];
-        await current_algorithm(this, this.bars, 0, this.bars.length-1);
-    }
+    sleep(){ return new Promise( resolve => setTimeout(resolve, this.opInterval) ); }
+
+    async runAlgorithm(){ await this.algorithm(this, this.bars, 0, this.bars.length-1); }
 
 
     updateCurrentBlock(a, b)
@@ -80,26 +72,26 @@ class Graph
     }
 
 
+    insertBefore(a, b)
+    {
+        // a: Índice do elemento que vai mudar de lugar.
+        // b: Índice do elemento antes do qual outro elemento será adicionado.
+
+        // console.log(`Inserindo ${this.bars[a].value} (posição ${a})\nantes de ${this.bars[b].value} (posição ${b}).`)
+        let temp = this.bars.splice(a, 1)[0];
+        this.bars.splice(b, 0, temp);
+        // console.log(Array.from(this.bars).map(x => x.value));
+
+        // await this.sleep();
+    }
+
+
     swap(a, b)
     {
-        return new Promise((resolve) =>
-        {
-            // console.log("\tTrocando " + this.bars[b].value + " de posição com " + this.bars[a].value);
-            [this.bars[a], this.bars[b]] = [this.bars[b], this.bars[a]]
-            
-            // console.log(Array.from(this.bars).map(x => x.value));
-            this.updateBarsPos(a, b);
-
-            setTimeout(resolve, this.opInterval);
-        });
-    }
-    
-
-    updateBarsPos(a, b)
-    {
-        // console.log("Updating bars["+a+"]" + "/ Updating bars["+b+"]\n");
-        this.bars[a].updatePos(a);
-        this.bars[b].updatePos(b);
+        // console.log("\tTrocando " + this.bars[b].value + " de posição com " + this.bars[a].value);
+        [this.bars[a], this.bars[b]] = [this.bars[b], this.bars[a]]
+        
+        // console.log(Array.from(this.bars).map(x => x.value));
     }
     
 
@@ -129,15 +121,15 @@ class Graph
             if(bar.color === bar.originalColor) continue;
 
             bar.color = bar.originalColor;
-            await sleep(5);
+            await sleep(1);
         }
     }
 
 
-    beginAnimation(renderFunction, render_obj)
+    beginAnimation(renderFunction, canvas)
     {
         this.animationFinished = false;
-        renderFunction(this, render_obj);
+        renderFunction(this, canvas);
     }
 
     endAnimation(){ this.animationFinished = true; }
@@ -150,11 +142,12 @@ class Graph
         this.ctx.fillStyle = "rgba(0, 200, 50, .2)";
         this.ctx.fillRect(this.currentGroup.x, 0, this.currentGroup.width, this.h);
 
-        for(let bar of this.bars) bar.draw();
+        for(let i = 0; i < this.bars_len; i++) this.bars[i].draw(i);
 
         this.ctx.fillStyle = "rgb(30, 30, 30)";
         this.ctx.font = "15px Consolas";
         this.ctx.fillText(`Atraso: ${this.opInterval}ms`, 5, 15);
         this.ctx.fillText(`População: ${this.bars_len}`, 5, 30);
+        this.ctx.fillText(`N° de comparações: ${this.comparisonCount}`, 5, 45);
     }
 }
