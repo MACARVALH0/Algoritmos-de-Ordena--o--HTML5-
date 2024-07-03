@@ -24,7 +24,6 @@ function renderGraph(graph_obj, canvas)
 
         if(graph_obj.animationFinished)
         {
-            console.log("Fim da animação.\n");
             canvas.render = undefined;
             draw();
             return;

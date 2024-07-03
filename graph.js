@@ -56,7 +56,6 @@ class Graph
 
         this.bars.push(...bars);
         this.bars_len = this.bars.length;
-        // console.log(Array.from(this.bars).map(x => x.value));
     }
 
 
@@ -74,25 +73,12 @@ class Graph
 
     insertBefore(a, b)
     {
-        // a: Índice do elemento que vai mudar de lugar.
-        // b: Índice do elemento antes do qual outro elemento será adicionado.
-
-        // console.log(`Inserindo ${this.bars[a].value} (posição ${a})\nantes de ${this.bars[b].value} (posição ${b}).`)
         let temp = this.bars.splice(a, 1)[0];
         this.bars.splice(b, 0, temp);
-        // console.log(Array.from(this.bars).map(x => x.value));
-
-        // await this.sleep();
     }
 
 
-    swap(a, b)
-    {
-        // console.log("\tTrocando " + this.bars[b].value + " de posição com " + this.bars[a].value);
-        [this.bars[a], this.bars[b]] = [this.bars[b], this.bars[a]]
-        
-        // console.log(Array.from(this.bars).map(x => x.value));
-    }
+    swap(a, b){ [this.bars[a], this.bars[b]] = [this.bars[b], this.bars[a]]; }
     
 
     highlightBar(index)
@@ -100,15 +86,6 @@ class Graph
         this.bars[this.highlightedIndex].highlight(false);
         this.highlightedIndex = index;
         this.bars[index].highlight(true, this.highlightColor);
-
-        // Para caso haja necessidade de múltiplas barras destacadas no futuro...
-        // this.highlightedIndexes.forEach((bar_index) =>
-        //     this.bars[bar_index].highlight(false));
-
-        // this.highlightedIndexes = [...indexes];
-        
-        // this.highlightedIndexes.forEach((bar_index) =>
-        //     this.bars[bar_index].highlight(true, this.highlightColor));
     }
 
 

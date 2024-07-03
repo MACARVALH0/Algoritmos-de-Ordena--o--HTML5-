@@ -6,7 +6,6 @@ class Bar
         this.pivot = false;
 
         this.width = graphicWidth;
-        // this.index = 0;
 
         this.x = i*this.width;
         this.y = canvasHeight - this.value;
@@ -24,9 +23,5 @@ class Bar
     {
         this.ctx.fillStyle = this.color;
         this.ctx.fillRect(index*this.width, this.y, this.width, this.value);
-
-        // this.ctx.fillStyle = "rgb(30, 30, 30)";
-        // this.ctx.font = "10px Consolas";
-        // this.ctx.fillText(this.value, index*(this.width+1), this.y+10);
     }
 }

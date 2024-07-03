@@ -23,15 +23,11 @@ async function findPos(graph, array, right)
 
     for(let j = right-1; j >= 0; j--)
     {
-        if(array[right].value <= array[j].value || array[j] === undefined)
-        {
-            pos = j;
-        }
+        if(array[right].value <= array[j].value || array[j] === undefined) pos = j
         
         else return pos;
         
         graph.comparisonCount++;
-        // await graph.sleep();
     }
 
     return pos;

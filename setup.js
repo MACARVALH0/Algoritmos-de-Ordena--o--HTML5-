@@ -2,9 +2,7 @@ window.addEventListener("load", () =>
 {
     const algorithms = new Map();
     algorithms.set("insertionsort", insertionsort);
-    // algorithms.set("mergesort", mergesort);
     algorithms.set("quicksort", quicksort);
-    // algorithms.set("bogosort", bogosort);
 
     const canvas = Array.from(document.querySelectorAll(".canvas-wrapper")).map( canvas =>
     { return {wrapper: canvas, algorithm: algorithms.get(canvas.dataset.algorithm), render: undefined} }); // Cada canvas possui seu objeto de contexto
