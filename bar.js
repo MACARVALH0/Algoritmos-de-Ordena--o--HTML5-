@@ -6,7 +6,6 @@ class Bar
         this.pivot = false;
 
         this.width = graphicWidth;
-        // this.index = 0;
 
         this.x = i*this.width;
         this.y = canvasHeight - this.value;

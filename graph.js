@@ -36,7 +36,7 @@ class Graph
         if(final_amount != amount) console.warn("A população sugerida ultrapassa os limites estabelecidos. A quantidade corrigida é de " + final_amount + " barras.");
 
         const colors = new Uint8ClampedArray(3);
-        colors[0] = 0;
+        colors[0] = 30;
         colors[1] = 50;
         colors[2] = 255;
 
@@ -56,11 +56,12 @@ class Graph
 
         this.bars.push(...bars);
         this.bars_len = this.bars.length;
+
         // console.log(Array.from(this.bars).map(x => x.value));
     }
 
 
-    sleep(){ return new Promise( resolve => setTimeout(resolve, this.opInterval) ); }
+    sleep(timer){ return new Promise( resolve => setTimeout(resolve, this.opInterval) ); }
 
     async runAlgorithm(){ await this.algorithm(this, this.bars, 0, this.bars.length-1); }
 
@@ -84,6 +85,17 @@ class Graph
 
         // await this.sleep();
     }
+
+
+    // Sets array[a] to array[b];
+    set(index, bar){ this.bars[index] = bar; }
+    // {
+    //     console.log("a: "+a + ", b: "+b)
+    //     console.log(`Inserindo ${bar.value} no lugar de ${this.bars[index].value}`)
+    //     this.bars[index] = bar;
+    //     console.log(Array.from(this.bars).map(x => x.value));
+    //     console.log("\n");
+    // }
 
 
     swap(a, b)

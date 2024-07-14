@@ -2,8 +2,8 @@ window.addEventListener("load", () =>
 {
     const algorithms = new Map();
     algorithms.set("insertionsort", insertionsort);
-    // algorithms.set("mergesort", mergesort);
     algorithms.set("quicksort", quicksort);
+    algorithms.set("mergesort", mergesort);
     // algorithms.set("bogosort", bogosort);
 
     const canvas = Array.from(document.querySelectorAll(".canvas-wrapper")).map( canvas =>

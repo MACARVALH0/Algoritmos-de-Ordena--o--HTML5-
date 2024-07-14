@@ -32,11 +32,10 @@ async function partition(graph, array, left, right)
             if(i === j) continue;
 
             graph.swap(i, j);
-            await graph.sleep();
         }
         
         graph.comparisonCount++;
-
+        await graph.sleep();
     }
 
     // console.log("left: " + left + " i: " + i);

@@ -13,11 +13,11 @@ async function main(canvas)
         width: canvas_element.width,
         height: canvas_element.height < 255 ? canvas_element.height : 255,
         ctx: canvas_element.getContext("2d"),
-        opInterval: 10
+        opInterval: 1
     }
 
     const graph = new Graph(canvas_obj);
-    graph.populateBars(700);
+    graph.populateBars(1000);
 
     graph.beginAnimation(renderGraph, canvas);
     await graph.runAlgorithm();
