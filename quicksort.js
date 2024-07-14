@@ -11,7 +11,6 @@ async function quicksort(graph, array, left, right)
     }
 }
 
-
 /// Particionamento de Lomuto
 async function partition(graph, array, left, right)
 {
@@ -28,11 +27,10 @@ async function partition(graph, array, left, right)
             if(i === j) continue;
 
             graph.swap(i, j);
-            await graph.sleep();
         }
         
         graph.comparisonCount++;
-
+        await graph.sleep();
     }
 
     await graph.swap(left, i);

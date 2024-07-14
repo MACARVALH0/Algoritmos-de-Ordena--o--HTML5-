@@ -36,7 +36,7 @@ class Graph
         if(final_amount != amount) console.warn("A população sugerida ultrapassa os limites estabelecidos. A quantidade corrigida é de " + final_amount + " barras.");
 
         const colors = new Uint8ClampedArray(3);
-        colors[0] = 0;
+        colors[0] = 30;
         colors[1] = 50;
         colors[2] = 255;
 
@@ -61,6 +61,7 @@ class Graph
 
     sleep(){ return new Promise( resolve => setTimeout(resolve, this.opInterval) ); }
 
+    
     async runAlgorithm(){ await this.algorithm(this, this.bars, 0, this.bars.length-1); }
 
 
@@ -76,6 +77,9 @@ class Graph
         let temp = this.bars.splice(a, 1)[0];
         this.bars.splice(b, 0, temp);
     }
+
+
+    set(index, bar){ this.bars[index] = bar; }
 
 
     swap(a, b){ [this.bars[a], this.bars[b]] = [this.bars[b], this.bars[a]]; }

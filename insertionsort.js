@@ -10,10 +10,10 @@ async function insertionsort(graph, array)
         if(pos != i)
         {
             graph.insertBefore(i, pos);
-            await graph.sleep();
         }
-
+        
         array[pos].highlight(false);
+        await graph.sleep();
     }
 }
 
@@ -23,7 +23,7 @@ async function findPos(graph, array, right)
 
     for(let j = right-1; j >= 0; j--)
     {
-        if(array[right].value <= array[j].value || array[j] === undefined) pos = j
+        if(array[right].value <= array[j].value || array[j] === undefined) pos = j;
         
         else return pos;
         
